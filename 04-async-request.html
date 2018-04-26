@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Récupération depuis des fichiers textes</title>
+    <script>
+        // crée l'objet XHR
+        function getXHR(){
+            var reqHTTP;
+            if(window.XMLHttpRequest){
+                reqHTTP = new XMLHttpRequest();
+                if(reqHTTP.overrideMimeType){
+                    reqHTTP.overrideMimeType('text/xml');
+                }
+            }else{
+                reqHTTP=null;
+            }
+            return reqHTTP;
+        }
+        // requête pour récupérer des données de fichiers au format texte (myURL), et les afficher dans le div qui a l'id idDiv
+        function getTEXT(myURL,idDiv){
+            // création de l'objet XHR (fonction au dessus)
+            var XHR = getXHR();
+            // Peut-on faire de l'AJAX?
+            if(XHR==null){
+                alert("Impossible d'utiliser AJAX sur votre navigateur de m.....");
+                return;
+            }
+            // ouverture du fichier distant avec la méthode get en synchrone
+            XHR.open('GET',myURL,true);
+            // on envoie une requête sur ce fichier (vide)
+            XHR.send(null);
+            // si la requête est terminée (4)
+            if(XHR.readyState==4){
+                // si on a une réponse http positive (200)
+                if(XHR.status==200){
+                    document.getElementById(idDiv).innerHTML = XHR.responseText;
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Récupération depuis des fichiers textes</h1>
+    <h2>Ici nous utiliserons ajax en synchrone, càd qu'il bloque la page de l'utilisateur tant qu'on a pas fini la communication entre le serveur et le navigateur</h2>
+<div id="contentA">Ici du blabla</div><hr>
+<div id="contentB"></div><hr>
+<button onclick="getTEXT('03-dutexte.txt','contentA')">Bouton 1</button>
+<button onclick="getTEXT('03-temps.php','contentB')">Bouton 2</button>
+<button onclick="getTEXT('https://www.w3schools.com/xml/ajax_xmlhttprequest_response.asp','contentB')">Bouton 3</button>
+</body>
+</html>
+
+
+
+
+.
+
+
+
+
+
+
+
+
+

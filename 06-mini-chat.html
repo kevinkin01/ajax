@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mini chat</title>
+    <style>
+        #content{
+            height: 80vh;
+            border:solid 1px black;
+            overflow: auto;
+        }
+        #envoi{
+            height: 5vh;
+            text-align: right;
+        }
+    </style>
+    <script>
+        // crée l'objet XHR
+        function getXHR(){
+            var reqHTTP;
+            if(window.XMLHttpRequest){
+                reqHTTP = new XMLHttpRequest();
+                if(reqHTTP.overrideMimeType){
+                    reqHTTP.overrideMimeType('text/xml');
+                }
+            }else{
+                reqHTTP=null;
+            }
+            return reqHTTP;
+        }
+        // envoi de myNAME et myTXT
+
+        // récupération des données
+
+        // affichage des commentaires
+
+        // vérification si un nouveau commentaire a été posté par un autre
+    </script>
+</head>
+<body>
+<h1>Mini chat</h1>
+<div id="content"></div>
+<div id="envoi">
+    <input type="text" size="20" id="myNAME" placeholder="Votre surnom" required>
+    <input type="text" size="55" id="myTXT" placeholder="Votre message" required>
+    <input type="button" id="mySUBMIT" value="Envoyer">
+</div>
+</body>
+</html>

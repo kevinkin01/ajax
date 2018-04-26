@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Récupération depuis des fichiers textes</title>
+    <script>
+        //créer l'objet XHR
+    function getXHR(){
+    var reqHTTP;
+
+    if(window.XMLHttpRequest){
+        reqHTTP= new XMLHttpRequest();
+
+    if(reqHTTP.overrideMineType){
+        reqHTTP.overrideMineType('text/xml');
+    }
+
+    }else {
+        reqHTTP=null;
+    }
+        return reqHTTP;
+    }
+
+    // requête pour récuperer des données de fichiers au format
+        function getTEXT(URL,idDiv) {
+             // Création de l'objet XHR (fonction au dessus)
+
+                var XHR = getXHR();
+
+            //peut-on faire de l'AJAX?
+                if (XHR==null){
+                    alert("impossible d'utiliser AJAX");
+                    return;
+                }
+                // ouverture du fichier distant avec la méthode get en synchrone
+
+                    XHR.open('GET',URL,false);
+
+                // on envoie une requête sur ce fichier (vide)
+
+                    XHR.send(null);
+                if (XHR.readyState==4){
+                    if (XHR.status==200){
+                        document.getElementById(idDiv).innerHTML = XHR.responseText;
+                    }
+                }
+    }
+    </script>
+
+</head>
+
+<body>
+
+    <h1>Récupération depuis des fichers textes</h1>
+
+    <h2>Ici nous utiliserons ajax en synchrone, càd qu'il bloque la page de l'utilisateur tant qu'on a pas fini la communicatiobn entre le serveur et le navigateur</h2>
+
+    <div id="contentA">Ici du bla bla</div>
+
+    <div id="contentB"></div>
+
+    <button onclick="getTEXT('03-dutexte.txt','contentA')">Bouton 1</button>
+
+    <button onclick="getTEXT('heure.php','contentB')">Bouton 2</button>
+
+
+</body>
+</html>

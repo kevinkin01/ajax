@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Création d'une fonction gérant le XHR</title>
+    <script>
+        function getXHR(){
+            var reqHTTP;
+
+            if(window.XMLHttpRequest){
+                reqHTTP= new XMLHttpRequest();
+
+                if(reqHTTP.overrideMineType){
+                    reqHTTP.overrideMineType('text/xml');
+                }
+
+            }else {
+                reqHTTP=null;
+            }
+            return reqHTTP;
+        }
+    </script>
+</head>
+<body>
+    <h1>Création d'une fonction gérant le l'XHR</h1>
+
+    <pre>
+        function getXHR(){
+            var reqHTTP;
+            // si l'objet est détecté par le navigateur
+            if(window.XMLHttprequest){
+                reqHTTP= new XMLHttpRequest();
+                // si on est sur firefox (et dérivés, il a besoin du type de données)
+            if(reqHTTP.overrideMineType){
+                reqHTTP.overrideMineType('text/xml');
+                }
+
+            }else {
+            reqHTTP=null;
+                }
+                return reqHTTP;
+            }
+    </pre>
+<script>
+    var XHR = getXHR();
+    if (XHR==null){
+        document.write("<h3>votre navigateur ne compred pas l'AJAX<h3>")
+    }else{
+        document.write("<h3>prêt pour l'Ajax</h3>")
+    }
+</script>
+</body>
+</html>

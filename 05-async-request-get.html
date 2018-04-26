@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Récupération depuis des fichiers textes en asynchrone</title>
+    <script>
+        // crée l'objet XHR
+        function getXHR(){
+            var reqHTTP;
+            if(window.XMLHttpRequest){
+                reqHTTP = new XMLHttpRequest();
+                if(reqHTTP.overrideMimeType){
+                    reqHTTP.overrideMimeType('text/xml');
+                }
+            }else{
+                reqHTTP=null;
+            }
+            return reqHTTP;
+        }
+        // requête pour récupérer des données de fichiers au format texte (myURL) en php, et les afficher dans le div qui a l'id idDiv (utilisation de la fonction viewTEXT)
+        function communicate(myURL,idDiv,loader=true){
+            // création de l'objet XHR (fonction au dessus)
+            var XHR = getXHR();
+            if(XHR==null){
+                alert("Impossible d'utiliser AJAX sur votre navigateur de m.....");
+                return;
+            }
+            if(loader) {
+                // chargement du loading
+                document.getElementById(idDiv).innerHTML = "<img src='loading2.gif' alt='' width='50' height='50'/>";
+            }
+
+            // ouverture du fichier distant avec la méthode get  en asynchrone
+            XHR.open('GET',myURL,true);
+
+            // création de l'écouteur d'événement qui appel une fonction anonyme pour éviter la mise en cache de la fonction viewTEXT
+            XHR.onreadystatechange = function(){
+                viewTEXT(XHR,idDiv);
+            }
+
+            // on envoie une requête sur ce fichier en get
+            XHR.send();
+        }
+        function viewTEXT(XHR,idDiv){
+            // si la requête est terminée (4)
+            if (XHR.readyState == 4) {
+                // si on a une réponse http positive (200)
+                if (XHR.status == 200) {
+                    document.getElementById(idDiv).innerHTML = XHR.responseText;
+                }
+            }
+
+        }
+    </script>
+</head>
+<body>
+    <h1>Récupération depuis des fichiers textes en asynchrone</h1>
+    <h2>Ici nous utiliserons ajax en asynchrone, càd qu'il bloque la page de l'utilisateur tant qu'on a pas fini la communication entre le serveur et le navigateur</h2>
+<div id="contentA">Ici du blabla</div><hr>
+<div id="contentB" style="max-height: 150px; overflow: auto;"></div><hr>
+<div id="contentC">Ici du blabla</div><hr>
+<button onclick="communicate('03-dutexte.txt','contentA',false)">Bouton 1</button>
+<button onclick="communicate('03-temps.php','contentB',true)">Bouton 2</button>
+<button onclick="communicate('04-operations.php','contentB')">Bouton 3</button>
+<script>
+    // toutes les secondes nous chargeons communicate sans loader (false), la fonction anonyme sert à éviter la mise en cache
+    setInterval(function(){communicate('03-temps.php','contentC',false);},1000);
+</script>
+</body>
+</html>
+
+
+
+
